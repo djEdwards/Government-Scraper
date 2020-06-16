@@ -3,22 +3,29 @@
 ## 06/11/20
 ## DJ Edwards
 #################
+
 import scrapy
+
 from datetime import datetime
+
 import html2text
+
 class coloradoSpider(scrapy.Spider):
+
     linksFile = open('all_CO_links.txt','r')
+
     name = "colorado"# - this is what you you use to run. (scrapy crawl alabama -o AL_result.json -t json)
+
     start_urls = map(lambda link: 'https://covid19.colorado.gov/'+ link if link.startswith('https') == False else link,linksFile.read().split(','))
 
 
     def parse(self, response):# - Scrapes title, date, and url (working on excerpt)
 
             converter = html2text.HTML2Text()
-            converter.ignore_links = True
-            classes = ['Governemnt','News','Social Media']
 
-            manicipalities = ['Multi-National','National','State','Global']
+            converter.ignore_links = True
+
+            classes = ['Governemnt','News','Social Media']
 
             languages = ['English(US)','Spanish','Chinese','French','Chinese','Japanese','German','Portuguese']
 
@@ -36,24 +43,25 @@ class coloradoSpider(scrapy.Spider):
 
             Class = classes[0]
 
-            manicipality = manicipalities[2]
+            manicipality = "Colorado"
 
             langauge = languages[0]
 
             yield {
-                'Title':title,
 
-                'Source':source,
+                'title':title,
 
-                'Date':date,
+                'source':source,
 
-                'Url':url,
+                'date':date,
 
-                'Scraped':currentDate,
+                'url':url,
 
-                'Class': Class,
+                'scraped':currentDate,
 
-                'Manicipality': manicipality,
+                'class': Class,
+
+                'manicipality': manicipality,
 
                 'language':langauge
 

@@ -3,8 +3,11 @@
 ## 06/11/20
 ## DJ Edwards
 #################
+
 import scrapy
+
 from datetime import datetime
+
 import html2text
 
 
@@ -18,48 +21,48 @@ class californiaSpider(scrapy.Spider):
 
 
     def parse(self, response):# - Scrapes title, date, and url (working on excerpt)
+
             converter = html2text.HTML2Text()
+
             converter.ignore_links = True  
 
             classes = ['Governemnt','News','Social Media']
 
-            manicipalities = ['Multi-National','National','State','Global']
-
             languages = ['English(US)','Spanish','Chinese','French','Chinese','Japanese','German','Portuguese']
 
-            date = response.css('time::text').extract(),
+            date = response.css('time::text').extract()
 
-            title = response.css('h1::text').get(),
+            title = response.css('h1::text').get()
 
-            url = response.url,
+            url = response.url
 
-            source = 'California State Government',
+            source = 'California State Government'
 
-            text = response.css('p::text').getall(),
+            text = response.css('p::text').getall()
 
-            currentDate = datetime.today().strftime('%Y-%m-%d'),
+            currentDate = datetime.today().strftime('%Y-%m-%d')
 
-            Class = classes[0],
+            Class = classes[0]
 
-            manicipality = manicipalities[2],
+            manicipality = "California"
 
             langauge = languages[0]
 
             yield {
 
-                'Title':title,
+                'title':title,
 
-                'Source':source,
+                'source':source,
 
-                'Date':date,
+                'date':date,
 
-                 'URL':url,
+                 'url':url,
 
-                'Scraped':currentDate,
+                'scraped':currentDate,
 
-                'Class': Class,
+                'class': Class,
 
-                'Manicipality': manicipality,
+                'manicipality': manicipality,
 
                 'language':langauge,
 
@@ -70,5 +73,3 @@ class californiaSpider(scrapy.Spider):
 
                 
                 }
-
-                ##NEXT: figure out next page.
