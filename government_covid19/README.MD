@@ -22,3 +22,4 @@ The CDC posts are saved on `[STATE INTIALS]_RESULTS.json` in the format `{Title,
 - While in virtualenv run `deactivate` to stop and exit the virtual envrionment
 - Source code for scraper can be found in `cdc_scrape/spiders` if starting from the root directory (directory containing this README)
 
+

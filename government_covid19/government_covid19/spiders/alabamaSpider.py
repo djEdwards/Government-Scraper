@@ -10,6 +10,8 @@ from datetime import datetime
 
 import html2text
 
+from langdetect import detect
+
 class alabamaSpider(scrapy.Spider):
 
     linksFile = open('all_AL_links.txt','r')
@@ -26,7 +28,6 @@ class alabamaSpider(scrapy.Spider):
             converter.ignore_links = True
 
             classes = ['Governemnt','News','Social Media']
-
 
             languages = ['English(US)','Spanish','Chinese','French','Chinese','Japanese','German','Portuguese']
 
@@ -46,7 +47,7 @@ class alabamaSpider(scrapy.Spider):
 
             manicipality = "Alabama"
 
-            langauge = languages[0]
+            langauge = detect(text)
 
             yield {
 

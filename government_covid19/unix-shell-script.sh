@@ -1,3 +1,3 @@
-scrapy crawl CO_links
-scrapy crawl colorado -o CO_RESULTS.json
+scrapy crawl AL_links
+scrapy crawl alabama -o AL_RESULTS.json
 

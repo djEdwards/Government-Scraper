@@ -10,6 +10,8 @@ from datetime import datetime
 
 import html2text
 
+from langdetect import detect
+
 class coloradoSpider(scrapy.Spider):
 
     linksFile = open('all_CO_links.txt','r')
@@ -45,7 +47,7 @@ class coloradoSpider(scrapy.Spider):
 
             manicipality = "Colorado"
 
-            langauge = languages[0]
+            langauge = detect()
 
             yield {
 

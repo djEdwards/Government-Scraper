@@ -10,6 +10,7 @@ from datetime import datetime
 
 import html2text
 
+from langdetect import detect
 
 class californiaSpider(scrapy.Spider):
 
@@ -28,8 +29,6 @@ class californiaSpider(scrapy.Spider):
 
             classes = ['Governemnt','News','Social Media']
 
-            languages = ['English(US)','Spanish','Chinese','French','Chinese','Japanese','German','Portuguese']
-
             date = response.css('time::text').extract()
 
             title = response.css('h1::text').get()
@@ -38,7 +37,7 @@ class californiaSpider(scrapy.Spider):
 
             source = 'California State Government'
 
-            text = response.css('p::text').getall()
+            text = response.css('p::text')[1].get()
 
             currentDate = datetime.today().strftime('%Y-%m-%d')
 
@@ -46,7 +45,7 @@ class californiaSpider(scrapy.Spider):
 
             manicipality = "California"
 
-            langauge = languages[0]
+            langauge = detect(title)
 
             yield {
 
