@@ -27,34 +27,34 @@ The CDC posts are saved on `[STATE INTIALS]_RESULTS.json` in the format `{Title,
 
 ## Individual State Scraper Notes:
 
-- Alabama
-Complete.
+- ### Alabama
+    - Complete.
 
-- Alaska
-Majority were PDFs.
+- ### Alaska
+    - Majority were PDFs.
 
-- Arizona
-Complete, except for date format.
+- ### Arizona
+    - Complete, except for date format.
 
-- Arkansas
-Majority were PDFs.
+- ### Arkansas
+    - Majority were PDFs.
 
-- California
-Complete.
+- ### California
+    - Complete.
 
-- Colorado
-Complete, except for the date format.
+- ### Colorado
+    - Complete, except for the date format.
 
-- Delaware
-Complete, missing date.
+- ### Delaware
+    - Complete, missing date.
 
-- Florida
-Blocked Scraping.
+- ### Florida
+    - Blocked Scraping.
 
-- Georgia
-Complete.
+- ### Georgia
+    - Complete.
 
-- Hawai'i
-slightly incorrect date formatting.
+- ### Hawai'i
+    - slightly incorrect date formatting.
 
 
