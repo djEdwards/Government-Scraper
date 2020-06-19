@@ -1,3 +1,8 @@
+#################
+## COLORADO (ROCK MT) - GET LINKS - Scraper
+## 06/15/20
+## DJ Edwards
+#################
 import scrapy
 
 class getLinks_Colorado(scrapy.Spider):

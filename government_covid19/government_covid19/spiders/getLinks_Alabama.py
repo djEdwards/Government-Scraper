@@ -1,3 +1,8 @@
+#################
+## ALABAMA - GET LINKS - Scraper
+## 06/11/20
+## DJ Edwards
+#################
 import scrapy
 
 class getLinks_Alabama(scrapy.Spider):

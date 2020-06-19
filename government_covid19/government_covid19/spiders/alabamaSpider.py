@@ -22,12 +22,13 @@ class alabamaSpider(scrapy.Spider):
 
 
     def parse(self, response):# - Scrapes title, date, and url (working on excerpt)
-    
+
             converter = html2text.HTML2Text()
 
             converter.ignore_links = True
 
             classes = ['Governemnt','News','Social Media']
+
 
             languages = ['English(US)','Spanish','Chinese','French','Chinese','Japanese','German','Portuguese']
 
@@ -45,7 +46,7 @@ class alabamaSpider(scrapy.Spider):
 
             Class = classes[0]
 
-            manicipality = "Alabama"
+            municipality = "Alabama"
 
             langauge = detect(text)
 
@@ -63,7 +64,7 @@ class alabamaSpider(scrapy.Spider):
 
                 'class': Class,
 
-                'manicipality': manicipality,
+                'municipality': municipality,
 
                 'language':langauge,
 

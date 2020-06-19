@@ -1,5 +1,5 @@
 #################
-## Golden State Scraper
+## Delaware Scraper
 ## 06/11/20
 ## DJ Edwards
 #################
@@ -12,13 +12,13 @@ import html2text
 
 from langdetect import detect
 
-class californiaSpider(scrapy.Spider):
+class delawareSpider(scrapy.Spider):
 
-    linksFile = open('all_CA_links.txt','r')
+    linksFile = open('all_DE_links.txt','r')
 
-    name = "california"# - this is what you you use to run. (scrapy crawl califonia -o CA_result.json -t json)
+    name = "delaware"# - this is what you you use to run. (scrapy crawl califonia -o CA_result.json -t json)
 
-    start_urls = map(lambda link: 'https://covid19.ca.gov'+ link if link.startswith('https') == False else link,linksFile.read().split(','))
+    start_urls = map(lambda link: 'https://news.delaware.gov/'+ link if link.startswith('https') == False else link,linksFile.read().split(','))
 
 
     def parse(self, response):# - Scrapes title, date, and url (working on excerpt)
@@ -29,21 +29,21 @@ class californiaSpider(scrapy.Spider):
 
             classes = ['Governemnt','News','Social Media']
 
-            date = response.css('time::text').get()
+            date = response.css('p::text')[608].get()#IS INCORRECT GO BACK LATER AND FIX.
 
-            title = response.css('h1::text').get()
+            title = response.css('h1::text')[1].get()
 
             url = response.url
 
-            source = 'California State Government'
+            source = 'Delaware State Government'
 
-            text = response.css('p::text')[1].get()
+            text = response.css('p::text')[609].get()
 
             currentDate = datetime.today().strftime('%Y-%m-%d')
 
             Class = classes[0]
 
-            municipality = "California"
+            municipality = "Delaware"
 
             langauge = detect(title)
 

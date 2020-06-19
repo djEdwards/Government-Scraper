@@ -1,6 +1,6 @@
 #################
 ## Colorado Scraper
-## 06/11/20
+## 06/15/20
 ## DJ Edwards
 #################
 
@@ -10,7 +10,7 @@ from datetime import datetime
 
 import html2text
 
-from langdetect import detect
+import re
 
 class coloradoSpider(scrapy.Spider):
 
@@ -31,11 +31,18 @@ class coloradoSpider(scrapy.Spider):
 
             languages = ['English(US)','Spanish','Chinese','French','Chinese','Japanese','German','Portuguese']
 
-            title = response.css('.page-header::text').getall()
+            # title = response.css('.view-row::text').getall()
 
-            # text = response.css('p::text').get()
+            title = response.css('title::text').getall()
 
-            date = response.css('time ::text').get()
+            # text = response.css('p::text').get()#using get all, gets all of the text but split up with ,'s
+
+            text = response.css('p::text').getall()
+
+            # date = re.search('Colorado (.+?) of',text)
+
+
+            # date = response.css('datetime ::text').get()
 
             url = response.url
 
@@ -45,9 +52,9 @@ class coloradoSpider(scrapy.Spider):
 
             Class = classes[0]
 
-            manicipality = "Colorado"
+            municipality = "Colorado"
 
-            langauge = detect()
+            langauge = languages[0]
 
             yield {
 
@@ -55,7 +62,7 @@ class coloradoSpider(scrapy.Spider):
 
                 'source':source,
 
-                'date':date,
+                # 'date':date,
 
                 'url':url,
 
@@ -63,11 +70,11 @@ class coloradoSpider(scrapy.Spider):
 
                 'class': Class,
 
-                'manicipality': manicipality,
+                'municipality': municipality,
 
-                'language':langauge
+                'language':langauge,
 
-                # 'text':text
+                'text':text
 
                 # 'text':converter.handle(text)
 

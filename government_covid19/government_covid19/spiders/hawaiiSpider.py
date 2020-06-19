@@ -1,6 +1,6 @@
 #################
-## Golden State Scraper
-## 06/11/20
+## Hawaii Scraper
+## 06/19/20
 ## DJ Edwards
 #################
 
@@ -12,13 +12,13 @@ import html2text
 
 from langdetect import detect
 
-class californiaSpider(scrapy.Spider):
+class hawaiiSpider(scrapy.Spider):
 
-    linksFile = open('all_CA_links.txt','r')
+    linksFile = open('all_HI_links.txt','r')
 
-    name = "california"# - this is what you you use to run. (scrapy crawl califonia -o CA_result.json -t json)
+    name = "hawaii"# - this is what you you use to run. (scrapy crawl califonia -o CA_result.json -t json)
 
-    start_urls = map(lambda link: 'https://covid19.ca.gov'+ link if link.startswith('https') == False else link,linksFile.read().split(','))
+    start_urls = map(lambda link: 'https://governor.hawaii.gov'+ link if link.startswith('https') == False else link,linksFile.read().split(','))
 
 
     def parse(self, response):# - Scrapes title, date, and url (working on excerpt)
@@ -29,23 +29,23 @@ class californiaSpider(scrapy.Spider):
 
             classes = ['Governemnt','News','Social Media']
 
-            date = response.css('time::text').get()
+            date = response.css('.pagetitle ::text')[3].get()
 
-            title = response.css('h1::text').get()
+            title = response.css('.pagetitle h2::text').get()
 
             url = response.url
 
-            source = 'California State Government'
+            source = "Governor of the State of Hawai'i"
 
-            text = response.css('p::text')[1].get()
+            text = response.css('p::text').getall()
 
             currentDate = datetime.today().strftime('%Y-%m-%d')
 
             Class = classes[0]
 
-            municipality = "California"
+            municipality = "Hawai'i"
 
-            langauge = detect(title)
+            # langauge = detect(title)
 
             yield {
 
@@ -63,7 +63,7 @@ class californiaSpider(scrapy.Spider):
 
                 'municipality': municipality,
 
-                'language':langauge,
+                # 'language':langauge,
 
                 'text':text
 

@@ -1,5 +1,5 @@
 #################
-## Golden State Scraper
+## ARIZONA Scraper
 ## 06/11/20
 ## DJ Edwards
 #################
@@ -12,13 +12,15 @@ import html2text
 
 from langdetect import detect
 
-class californiaSpider(scrapy.Spider):
+import re
 
-    linksFile = open('all_CA_links.txt','r')
+class arizonaSpider(scrapy.Spider):
 
-    name = "california"# - this is what you you use to run. (scrapy crawl califonia -o CA_result.json -t json)
+    linksFile = open('all_AZ_links.txt','r')
 
-    start_urls = map(lambda link: 'https://covid19.ca.gov'+ link if link.startswith('https') == False else link,linksFile.read().split(','))
+    name = "arizona"# - this is what you you use to run. (scrapy crawl arizona -o AZ_result.json -t json)
+
+    start_urls = map(lambda link: 'https://ein.az.gov/'+ link if link.startswith('https') == False else link,linksFile.read().split(','))
 
 
     def parse(self, response):# - Scrapes title, date, and url (working on excerpt)
@@ -29,13 +31,18 @@ class californiaSpider(scrapy.Spider):
 
             classes = ['Governemnt','News','Social Media']
 
-            date = response.css('time::text').get()
+
+
+            # tempDate = str(response.css('.field_date_created::text').get())
+            # date = re.search('        (.*)     ', tempDate)
+
+            date = response.css('.field_date_created::text').get()
 
             title = response.css('h1::text').get()
 
             url = response.url
 
-            source = 'California State Government'
+            source = 'Arizona Emergency Information Netowrk'
 
             text = response.css('p::text')[1].get()
 
@@ -43,7 +50,7 @@ class californiaSpider(scrapy.Spider):
 
             Class = classes[0]
 
-            municipality = "California"
+            municipality = "Arizona"
 
             langauge = detect(title)
 
@@ -54,7 +61,7 @@ class californiaSpider(scrapy.Spider):
                 'source':source,
 
                 'date':date,
-
+ 
                  'url':url,
 
                 'scraped':currentDate,
@@ -68,7 +75,6 @@ class californiaSpider(scrapy.Spider):
                 'text':text
 
 
-               
-
+            
                 
                 }
