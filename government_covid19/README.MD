@@ -22,4 +22,36 @@ The CDC posts are saved on `[STATE INTIALS]_RESULTS.json` in the format `{Title,
 - While in virtualenv run `deactivate` to stop and exit the virtual envrionment
 - Source code for scraper can be found in `cdc_scrape/spiders` if starting from the root directory (directory containing this README)
 
+## Individual State Scraper Notes:
+
+- Alabama
+Complete.
+
+- Alaska
+Majority were PDFs.
+
+- Arizona
+Complete, except for date format.
+
+- Arkansas
+Majority were PDFs.
+
+- California
+Complete.
+
+- Colorado
+Complete, except for the date format.
+
+- Delaware
+Complete, missing date.
+
+- Florida
+Blocked Scraping.
+
+- Georgia
+Complete.
+
+- Hawai'i
+slightly incorrect date formatting.
+
 
