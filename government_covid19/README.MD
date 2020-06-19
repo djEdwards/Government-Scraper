@@ -18,12 +18,14 @@ The CDC posts are saved on `[STATE INTIALS]_RESULTS.json` in the format `{Title,
 
 
 ## Important Notes:
-- Since the addition to `[STATE INTIALS]_RESULTS.json` are appended on instead of overwritten, all the contents of or the whole file - [STATE INTIALS]_RESULTS.json must be deleted before each run (except the first run since `posts.json` does not exist yet during the first run). If this step is not taken `[STATE INTIALS]_RESULTS.json` **WILL HAVE** incorrect data
-- Additionally the contents of all-[STATE INTIALS]-links.txt are appended on, not overwritten. SO you MUST DELETE THE CONTENTS OF FILE BEFORE EACH RUN. 
+- Since the addition to `[STATE INTIALS]_RESULTS.json` are appended on instead of overwritten, all the contents of or the whole file [STATE INTIALS]_RESULTS.json must be deleted before each run (except the first run since `posts.json` does not exist yet during the first run). If this step is not taken `[STATE INTIALS]_RESULTS.json` **WILL HAVE** incorrect data
+- Additionally, the contents of all-[STATE INTIALS]-links.txt are appended on, not overwritten. Therefore the contents of the all-[STATE INTIALS]-links.txt file must be deleted before each run. 
 - **DO NOT** delete the file `all-[STATE INTIALS]-links.txt`.
 - Since the log settings has been set to `INFO` only information will be displayed during runs. If an error is encounterd and the link trying to be scraped has `downloads` or `.pdf` on it somewhere, the error message can be ignored.
 - While in virtualenv run `deactivate` to stop and exit the virtual envrionment
 - Source code for scraper can be found in `cdc_scrape/spiders` if starting from the root directory (directory containing this README)
+
+## ------------------------------------------------
 
 ## Individual State Scraper Notes:
 
@@ -55,6 +57,6 @@ The CDC posts are saved on `[STATE INTIALS]_RESULTS.json` in the format `{Title,
     - Complete.
 
 - ### Hawai'i
-    - slightly incorrect date formatting.
+    - Complete, slightly incorrect date formatting.
 
 
