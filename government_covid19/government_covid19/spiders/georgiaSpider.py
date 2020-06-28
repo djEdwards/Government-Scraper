@@ -1,74 +1,52 @@
 #################
-## Golden State Scraper
-## 06/11/20
+## Georgia  Scraper
+## 06/18/20
 ## DJ Edwards
 #################
-
 import scrapy
-
-from datetime import datetime
-
 import html2text
-
-from langdetect import detect
-
-class californiaSpider(scrapy.Spider):
-
-    linksFile = open('all_GA_links.txt','r')
-
-    name = "georgia"# - this is what you you use to run. (scrapy crawl califonia -o CA_result.json -t json)
-
-    start_urls = map(lambda link: 'https://gov.georgia.gov/'+ link if link.startswith('https') == False else link,linksFile.read().split(','))
+import cld2
+import dateparser
+from datetime import datetime
+from functools import reduce
 
 
-    def parse(self, response):# - Scrapes title, date, and url (working on excerpt)
+class georgiaSpider(scrapy.Spider):
+    linksFile = open('all_GA_links.txt', 'r')
 
-            converter = html2text.HTML2Text()
+    name = "georgia"
+    start_urls = map(lambda link: 'https://gov.georgia.gov' + link if link.startswith(
+        'https') == False else link, linksFile.read().split(','))
 
-            converter.ignore_links = True  
+    def parse(self, response):
+        now = datetime.utcnow().replace(microsecond=0).isoformat()
+        url = response.url
+        datetimeToday = now + 'Z'
+        textContent = 'todo'
+        dateElement = response.css('time::text').get()
+        dateElementText = dateElement.replace('\t', '').replace('\n', '').replace('                                 ', '').replace('                 ', '')
+        dateElementArray = dateElementText.split(',')
+        updatedDateISO = dateparser.parse(dateElementArray[0], languages=['en']).date()
+        updatedDateTime = str(updatedDateISO)
+        title = response.css('h1::text').getall()
+        contentArray = response.css('p::text').extract()
+        converter = html2text.HTML2Text()
+        converter.ignore_links = True
+        text = reduce(lambda first, second: converter.handle(first)+converter.handle(second), contentArray)
+        isReliable, textBytesFound, details = cld2.detect(text)
+        textMinusUnnecessaryChars = text.replace('\\','')
+        language = details[0].language_name
+        yield{
 
-            classes = ['Governemnt','News','Social Media']
-
-            date = response.css('time::text').extract()
-
-            title = response.css('.page-top__title--news::text').get()
-
-            url = response.url
-
-            source = 'Office of the Governer of Georgia'
-
-            text = response.css('p::text')[7].get()
-
-            currentDate = datetime.today().strftime('%Y-%m-%d')
-
-            Class = classes[0]
-
-            municipality = "Georgia"
-
-            langauge = detect(title)
-
-            yield {
-
-                'title':title,
-
-                'source':source,
-
-                'date':date,
-
-                 'url':url,
-
-                'scraped':currentDate,
-
-                'class': Class,
-
-                'municipality': municipality,
-
-                'language':langauge,
-
-                'text':text
-
-
-               
-
-                
-                }
+            'title': title,
+            'source': 'Georgia State Government',
+            'published': updatedDateTime,
+            'url': url,
+            'scraped': datetimeToday,
+            'classes': ['Government'],
+            'country': 'United States',
+            'municipality': 'Georgia',
+            'language': language,
+            'text': textMinusUnnecessaryChars
+        }
+ 

@@ -1,6 +1,6 @@
 #################
-## Hawai'i  Scraper
-## 06/19/20
+## Maine Scraper
+## 06/27/20
 ## DJ Edwards
 #################
 import scrapy
@@ -11,11 +11,11 @@ from datetime import datetime
 from functools import reduce
 
 
-class hawaiiSpider(scrapy.Spider):
-    linksFile = open('all_HI_links.txt', 'r')
+class maineSpider(scrapy.Spider):
+    linksFile = open('all_ME_links.txt', 'r')
 
-    name = "hawaii"
-    start_urls = map(lambda link: 'https://governor.hawaii.gov' + link if link.startswith(
+    name = "maine"
+    start_urls = map(lambda link: 'https://www.maine.gov' + link if link.startswith(
         'https') == False else link, linksFile.read().split(','))
 
     def parse(self, response):
@@ -23,14 +23,12 @@ class hawaiiSpider(scrapy.Spider):
         url = response.url
         datetimeToday = now + 'Z'
         textContent = 'todo'
-        dateElement = response.css('.pagetitle ::text')[3].get()
-        dateElementText = dateElement.replace('Posted on ', '').replace(' in ','')
+        dateElement = response.xpath('//*[@id="block-governor-content"]/article/div/div/div/div[1]/div/text()').get()
+        dateElementText = dateElement.replace('\t', '').replace('\n', '').replace('                                 ', '').replace('                 ', '')
         dateElementArray = dateElementText.split(',')
         updatedDateISO = dateparser.parse(dateElementArray[0], languages=['en']).date()
-        # if (dateElement[2][1:]!= None):
-        #     updatedTimeISO = dateElementArray[2][1:].replace('h', ':')+'-03:00'  INDEX OUT OF RANGE HERE. SO I AM WORKING AROUND IT FOR NOW.
         updatedDateTime = str(updatedDateISO)
-        title = response.css('.pagetitle h2::text').getall()
+        title = response.css('h1::text').getall()
         contentArray = response.css('p::text').extract()
         converter = html2text.HTML2Text()
         converter.ignore_links = True
@@ -41,14 +39,15 @@ class hawaiiSpider(scrapy.Spider):
         yield{
 
             'title': title,
-            'source': "Governor of the State of Hawai'i",
+            'source': 'Office of The Governor of Maine',
             'published': updatedDateTime,
             'url': url,
             'scraped': datetimeToday,
             'classes': ['Government'],
             'country': 'United States',
-            'municipality': 'Hawaii',
+            'municipality': 'Maine',
             'language': language,
             'text': textMinusUnnecessaryChars
         }
  
+               

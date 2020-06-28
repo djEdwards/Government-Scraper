@@ -1,6 +1,6 @@
 
 #################
-## IDAHO - GET LINKS - Scraper
+## Idaho - GET LINKS - Scraper
 ## 06/19/20
 ## DJ Edwards
 #################
@@ -11,7 +11,7 @@ class getLinks_Idaho(scrapy.Spider):
 
     start_urls = ['https://coronavirus.idaho.gov/governors-actions/'
     ]
-    global filename
+
     filename = 'all_ID_links.txt'
     def parse(self, response):
         links = response.css('li a::attr(href)').getall()

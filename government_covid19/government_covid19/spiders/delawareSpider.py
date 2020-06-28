@@ -1,74 +1,52 @@
 #################
-## Delaware Scraper
-## 06/11/20
+## Delaware - Scraper
+## 06/18/20
 ## DJ Edwards
 #################
-
 import scrapy
-
-from datetime import datetime
-
 import html2text
-
-from langdetect import detect
-
-class delawareSpider(scrapy.Spider):
-
-    linksFile = open('all_DE_links.txt','r')
-
-    name = "delaware"# - this is what you you use to run. (scrapy crawl califonia -o CA_result.json -t json)
-
-    start_urls = map(lambda link: 'https://news.delaware.gov/'+ link if link.startswith('https') == False else link,linksFile.read().split(','))
+import cld2
+import dateparser
+from datetime import datetime
+from functools import reduce
 
 
-    def parse(self, response):# - Scrapes title, date, and url (working on excerpt)
+class delawareiaSpider(scrapy.Spider):
+    linksFile = open('all_DE_links.txt', 'r')
 
-            converter = html2text.HTML2Text()
+    name = "delaware"
+    start_urls = map(lambda link: 'https://news.delaware.gov/' + link if link.startswith(
+        'https') == False else link, linksFile.read().split(','))
 
-            converter.ignore_links = True  
+    def parse(self, response):
+        now = datetime.utcnow().replace(microsecond=0).isoformat()
+        url = response.url
+        datetimeToday = now + 'Z'
+        textContent = 'todo'
+        dateElement = response.css('.text-muted.small::text').get()
+        dateElementText = dateElement.replace('Date Posted: ', '')
+        dateElementArray = dateElementText.split(',')
+        updatedDateISO = dateparser.parse(dateElementArray[0], languages=['en']).date()
+        updatedDateTime = str(updatedDateISO)
+        title = response.css('h1::text')[1].getall()
+        contentArray = response.css('p::text').extract()
+        converter = html2text.HTML2Text()
+        converter.ignore_links = True
+        text = reduce(lambda first, second: converter.handle(first)+converter.handle(second), contentArray)
+        isReliable, textBytesFound, details = cld2.detect(text)
+        textMinusUnnecessaryChars = text.replace('\\','')
+        language = details[0].language_name
+        yield{
 
-            classes = ['Governemnt','News','Social Media']
-
-            date = response.css('p::text')[608].get()#IS INCORRECT GO BACK LATER AND FIX.
-
-            title = response.css('h1::text')[1].get()
-
-            url = response.url
-
-            source = 'Delaware State Government'
-
-            text = response.css('p::text')[609].get()
-
-            currentDate = datetime.today().strftime('%Y-%m-%d')
-
-            Class = classes[0]
-
-            municipality = "Delaware"
-
-            langauge = detect(title)
-
-            yield {
-
-                'title':title,
-
-                'source':source,
-
-                'date':date,
-
-                 'url':url,
-
-                'scraped':currentDate,
-
-                'class': Class,
-
-                'municipality': municipality,
-
-                'language':langauge,
-
-                'text':text
-
-
-               
-
-                
-                }
+            'title': title,
+            'source': 'Delaware State Government',
+            'published': updatedDateTime,
+            'url': url,
+            'scraped': datetimeToday,
+            'classes': ['Government'],
+            'country': 'United States',
+            'municipality': 'Delaware',
+            'language': language,
+            'text': textMinusUnnecessaryChars
+        }
+ 

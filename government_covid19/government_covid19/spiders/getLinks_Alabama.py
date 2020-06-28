@@ -1,5 +1,5 @@
 #################
-## ALABAMA - GET LINKS - Scraper
+## Alabama - GET LINKS - Scraper
 ## 06/11/20
 ## DJ Edwards
 #################
@@ -10,11 +10,16 @@ class getLinks_Alabama(scrapy.Spider):
 
     start_urls = [
         
-        'https://governor.alabama.gov/newsroom/tag/covid-19/'
+        'https://governor.alabama.gov/newsroom/tag/covid-19/',
+        'https://governor.alabama.gov/newsroom/tag/covid-19/page/2/',
+        'https://governor.alabama.gov/newsroom/tag/covid-19/page/3/',
+        'https://governor.alabama.gov/newsroom/tag/covid-19/page/4/',
+        'https://governor.alabama.gov/newsroom/tag/covid-19/page/5/'
+
     ]
 
     def parse(self, response):
-        links = response.css('.story-title ::attr(href)').getall()
         filename = 'all_AL_links.txt'
-        with open(filename,'w') as f:
+        links = response.css('.story-title ::attr(href)').getall()
+        with open(filename,'a') as f:
             f.write(','.join(links))

@@ -1,6 +1,6 @@
 #################
-## ARIZONA - GET LINKS - Scraper
-## 06/18/20
+## Arizona - GET LINKS - Scraper
+## 06/11/20
 ## DJ Edwards
 #################
 import scrapy

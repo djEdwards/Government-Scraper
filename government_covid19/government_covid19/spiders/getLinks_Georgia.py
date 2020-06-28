@@ -1,5 +1,5 @@
 #################
-## GEORGIA - GET LINKS - Scraper
+## Georgia - GET LINKS - Scraper
 ## 06/18/20
 ## DJ Edwards
 #################
@@ -21,7 +21,6 @@ class getLinks_Georgia(scrapy.Spider):
         'https://gov.georgia.gov/press-releases?field_press_release_type_target_id=All&page=9',
         'https://gov.georgia.gov/press-releases?field_press_release_type_target_id=All&page=10'
     ]
-    global filename
     def parse(self, response):
         links = response.css('.more-link__link::attr(href)').getall()
         filename = 'all_GA_links.txt'

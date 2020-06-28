@@ -19,7 +19,6 @@ The CDC posts are saved on `[STATE INTIALS]_RESULTS.json` in the format `{Title,
 
 ## * Important Notes:
 - Since the addition to `[STATE INTIALS]_RESULTS.json` are appended on instead of overwritten, all the contents of or the whole file [STATE INTIALS]_RESULTS.json must be deleted before each run (except the first run since `posts.json` does not exist yet during the first run). If this step is not taken `[STATE INTIALS]_RESULTS.json` **WILL HAVE** incorrect data
-- Additionally, the contents of all-[STATE INTIALS]-links.txt are appended on, not overwritten. Therefore the contents of the all-[STATE INTIALS]-links.txt file must be deleted before each run. 
 - **DO NOT** delete the file `all-[STATE INTIALS]-links.txt`.
 - Since the log settings has been set to `INFO` only information will be displayed during runs. If an error is encounterd and the link trying to be scraped has `downloads` or `.pdf` on it somewhere, the error message can be ignored.
 - While in virtualenv run `deactivate` to stop and exit the virtual envrionment
@@ -27,36 +26,74 @@ The CDC posts are saved on `[STATE INTIALS]_RESULTS.json` in the format `{Title,
 
 ## ------------------------------------------------
 
-## Individual State Scraper Notes:
+## * Individual State Scraper Notes:
+- (// - Indicates if scraper contains updated ISO date format)
+- (X - Indicates that source is blocking scraping, or mostly contains PDFS/Vidos)
 
-- ### Alabama
-    - Complete.
+### 1. Alabama //
+    - Complete.(~50 sources)
 
-- ### Alaska
+### 2. Alaska - X
     - Majority were PDFs.
 
-- ### Arizona
+### 3. Arizona //
     - Complete, except for date format.
 
-- ### Arkansas
+### 4. Arkansas - X
     - Majority were PDFs.
 
-- ### California
+### 5. California //
     - Complete.
 
-- ### Colorado
-    - Complete, except for the date format.
+### 6. Maine //
+    - Complete.
 
-- ### Delaware
-    - Complete, missing date.
+### 7. Delaware
+    - Complete. (Old Version). Still trying to update formatting.
 
-- ### Florida
+### 8. Florida - X
     - Blocked Scraping.
 
-- ### Georgia
-    - Complete.
+### 9. Georgia //
+    - Complete. Doesn't close properly... (~40 sources)
 
-- ### Hawai'i
-    - Complete, slightly incorrect date formatting.
+### 10. Hawai'i //
+    - Complete. (~40 sources)
+
+### 11. Idaho //
+    - Complete. (~50 sources)
+
+### 12. Illinoisb - X
+    - skipped. (Fow now)
+
+### 13. New York //
+    - Complete. (~40 sources)
+
+### 14. Louisana - X
+    - Blocked scraping.
+       
+### 15. Washington //
+    - Complete. (~50 sources)
+
+### 16. New Jersey //
+    - Complete. (~70 sources)
+
+### 17. Pennsylvania //
+    - Complete. (~70 sources)
+
+### 18. Texas //
+    - Complete. (~200 sources)
+
+### 19. Vermont //
+    - Complete. (~60 sources)
+
+### 20. Michigan - X
+    - Blocked Scaping.
+
+### 21. Massachusetts //
+    - Complete. (~80 sources)
+
+### Number of working spiders = 15
+
 
 

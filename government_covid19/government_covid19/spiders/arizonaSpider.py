@@ -1,80 +1,51 @@
 #################
-## ARIZONA Scraper
+## Arizona Scraper
 ## 06/11/20
 ## DJ Edwards
 #################
-
 import scrapy
-
-from datetime import datetime
-
 import html2text
+import cld2
+import dateparser
+from datetime import datetime
+from functools import reduce
 
-from langdetect import detect
-
-import re
 
 class arizonaSpider(scrapy.Spider):
+    linksFile = open('all_AZ_links.txt', 'r')
 
-    linksFile = open('all_AZ_links.txt','r')
+    name = "arizona"
+    start_urls = map(lambda link: 'https://ein.az.gov/' + link if link.startswith(
+        'https') == False else link, linksFile.read().split(','))
 
-    name = "arizona"# - this is what you you use to run. (scrapy crawl arizona -o AZ_result.json -t json)
-
-    start_urls = map(lambda link: 'https://ein.az.gov/'+ link if link.startswith('https') == False else link,linksFile.read().split(','))
-
-
-    def parse(self, response):# - Scrapes title, date, and url (working on excerpt)
-
-            converter = html2text.HTML2Text()
-
-            converter.ignore_links = True  
-
-            classes = ['Governemnt','News','Social Media']
-
-
-
-            # tempDate = str(response.css('.field_date_created::text').get())
-            # date = re.search('        (.*)     ', tempDate)
-
-            date = response.css('.field_date_created::text').get()
-
-            title = response.css('h1::text').get()
-
-            url = response.url
-
-            source = 'Arizona Emergency Information Netowrk'
-
-            text = response.css('p::text')[1].get()
-
-            currentDate = datetime.today().strftime('%Y-%m-%d')
-
-            Class = classes[0]
-
-            municipality = "Arizona"
-
-            langauge = detect(title)
-
-            yield {
-
-                'title':title,
-
-                'source':source,
-
-                'date':date,
+    def parse(self, response):
+        now = datetime.utcnow().replace(microsecond=0).isoformat()
+        url = response.url
+        datetimeToday = now + 'Z'
+        textContent = 'todo'
+        dateElement = response.css('.field_date_created::text').get()
+        dateElementText = dateElement.replace('\t', '').replace('\n', '').replace('                                 ', '').replace('                 ', '')
+        dateElementArray = dateElementText.split(',')
+        updatedDateISO = dateparser.parse(dateElementArray[0], languages=['en']).date()
+        updatedDateTime = str(updatedDateISO)
+        title = response.css('h1::text').getall()
+        contentArray = response.css('p::text').extract()
+        converter = html2text.HTML2Text()
+        converter.ignore_links = True
+        text = reduce(lambda first, second: converter.handle(first)+converter.handle(second), contentArray)
+        isReliable, textBytesFound, details = cld2.detect(text)
+        textMinusUnnecessaryChars = text.replace('\\','')
+        language = details[0].language_name
+        yield{
+            'title': title,
+            'source': 'Arizona Emergency Information Netowrk',
+            'published': updatedDateTime,
+            'url': url,
+            'scraped': datetimeToday,
+            'classes': ['Government'],
+            'country': 'United States',
+            'municipality': 'Arizona',
+            'language': language,
+            'text': textMinusUnnecessaryChars
+        }
  
-                 'url':url,
-
-                'scraped':currentDate,
-
-                'class': Class,
-
-                'municipality': municipality,
-
-                'language':langauge,
-
-                'text':text
-
-
-            
-                
-                }

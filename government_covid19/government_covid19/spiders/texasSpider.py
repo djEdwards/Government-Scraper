@@ -1,6 +1,6 @@
 #################
-## Hawai'i  Scraper
-## 06/19/20
+## Texas  Scraper
+## 06/26/20
 ## DJ Edwards
 #################
 import scrapy
@@ -11,11 +11,11 @@ from datetime import datetime
 from functools import reduce
 
 
-class hawaiiSpider(scrapy.Spider):
-    linksFile = open('all_HI_links.txt', 'r')
+class texasSpider(scrapy.Spider):
+    linksFile = open('all_TX_links.txt', 'r')
 
-    name = "hawaii"
-    start_urls = map(lambda link: 'https://governor.hawaii.gov' + link if link.startswith(
+    name = "texas"
+    start_urls = map(lambda link: 'https://gov.texas.gov' + link if link.startswith(
         'https') == False else link, linksFile.read().split(','))
 
     def parse(self, response):
@@ -23,14 +23,12 @@ class hawaiiSpider(scrapy.Spider):
         url = response.url
         datetimeToday = now + 'Z'
         textContent = 'todo'
-        dateElement = response.css('.pagetitle ::text')[3].get()
-        dateElementText = dateElement.replace('Posted on ', '').replace(' in ','')
+        dateElement = response.css('.meta::text').get()
+        dateElementText = dateElement.replace('\t', '').replace('\n', '').replace('                                 ', '').replace('                 ', '')
         dateElementArray = dateElementText.split(',')
         updatedDateISO = dateparser.parse(dateElementArray[0], languages=['en']).date()
-        # if (dateElement[2][1:]!= None):
-        #     updatedTimeISO = dateElementArray[2][1:].replace('h', ':')+'-03:00'  INDEX OUT OF RANGE HERE. SO I AM WORKING AROUND IT FOR NOW.
         updatedDateTime = str(updatedDateISO)
-        title = response.css('.pagetitle h2::text').getall()
+        title = response.css('h1::text').getall()
         contentArray = response.css('p::text').extract()
         converter = html2text.HTML2Text()
         converter.ignore_links = True
@@ -41,13 +39,13 @@ class hawaiiSpider(scrapy.Spider):
         yield{
 
             'title': title,
-            'source': "Governor of the State of Hawai'i",
+            'source': 'Office of the governor of Texas',
             'published': updatedDateTime,
             'url': url,
             'scraped': datetimeToday,
             'classes': ['Government'],
             'country': 'United States',
-            'municipality': 'Hawaii',
+            'municipality': 'Texas',
             'language': language,
             'text': textMinusUnnecessaryChars
         }

@@ -1,6 +1,6 @@
 #################
-## Hawai'i  Scraper
-## 06/19/20
+## New Jersey - Scraper
+## 06/24/20
 ## DJ Edwards
 #################
 import scrapy
@@ -11,11 +11,11 @@ from datetime import datetime
 from functools import reduce
 
 
-class hawaiiSpider(scrapy.Spider):
-    linksFile = open('all_HI_links.txt', 'r')
+class newjerseySpider(scrapy.Spider):
+    linksFile = open('all_NJ_links.txt', 'r')
 
-    name = "hawaii"
-    start_urls = map(lambda link: 'https://governor.hawaii.gov' + link if link.startswith(
+    name = "newjersey"
+    start_urls = map(lambda link: 'https://nj.gov' + link if link.startswith(
         'https') == False else link, linksFile.read().split(','))
 
     def parse(self, response):
@@ -23,14 +23,13 @@ class hawaiiSpider(scrapy.Spider):
         url = response.url
         datetimeToday = now + 'Z'
         textContent = 'todo'
-        dateElement = response.css('.pagetitle ::text')[3].get()
-        dateElementText = dateElement.replace('Posted on ', '').replace(' in ','')
+        dateElement = response.css('.text-muted::text').get()
+        dateElementText = dateElement.replace('\t', '').replace('\n', '').replace('                                 ', '').replace('                 ', '')
         dateElementArray = dateElementText.split(',')
         updatedDateISO = dateparser.parse(dateElementArray[0], languages=['en']).date()
-        # if (dateElement[2][1:]!= None):
-        #     updatedTimeISO = dateElementArray[2][1:].replace('h', ':')+'-03:00'  INDEX OUT OF RANGE HERE. SO I AM WORKING AROUND IT FOR NOW.
+    
         updatedDateTime = str(updatedDateISO)
-        title = response.css('.pagetitle h2::text').getall()
+        title = response.css('h3::text').get()
         contentArray = response.css('p::text').extract()
         converter = html2text.HTML2Text()
         converter.ignore_links = True
@@ -39,16 +38,14 @@ class hawaiiSpider(scrapy.Spider):
         textMinusUnnecessaryChars = text.replace('\\','')
         language = details[0].language_name
         yield{
-
             'title': title,
-            'source': "Governor of the State of Hawai'i",
-            'published': updatedDateTime,
+            'source': 'New Jersey State Government',
+            'published': updatedDateISO,
             'url': url,
             'scraped': datetimeToday,
             'classes': ['Government'],
             'country': 'United States',
-            'municipality': 'Hawaii',
+            'municipality': 'New Jersey',
             'language': language,
             'text': textMinusUnnecessaryChars
         }
- 
