@@ -31,22 +31,22 @@ The CDC posts are saved on `[STATE INTIALS]_RESULTS.json` in the format `{Title,
 - (X - Indicates that source is blocking scraping, or mostly contains PDFS/Vidos)
 
 ### 1. Alabama //
-    - Complete.(~50 sources)
+    - Complete.(~90 sources)
 
 ### 2. Alaska - X
     - Majority were PDFs.
 
 ### 3. Arizona //
-    - Complete, except for date format.
+    - Complete. (~145 sources)
 
 ### 4. Arkansas - X
     - Majority were PDFs.
 
 ### 5. California //
-    - Complete.
+    - Complete. (~120 sources)
 
 ### 6. Maine //
-    - Complete.
+    - Complete. (~130 sources)
 
 ### 7. Delaware
     - Complete. (Old Version). Still trying to update formatting.
@@ -63,7 +63,7 @@ The CDC posts are saved on `[STATE INTIALS]_RESULTS.json` in the format `{Title,
 ### 11. Idaho //
     - Complete. (~50 sources)
 
-### 12. Illinoisb - X
+### 12. Illinois - X
     - skipped. (Fow now)
 
 ### 13. New York //
