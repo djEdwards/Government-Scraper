@@ -93,7 +93,10 @@ The CDC posts are saved on `[STATE INTIALS]_RESULTS.json` in the format `{Title,
 ### 21. Massachusetts //
     - Complete. (~80 sources)
 
-### Number of working spiders = 15
+### 22. North Carolina //
+    - Complete. (~140 sources)
+
+### Number of working spiders = 16
 
 
 
