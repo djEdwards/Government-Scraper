@@ -5,7 +5,7 @@
 #################
 import scrapy
 
-class getLinks_Louisana(scrapy.Spider):
+class getLinks_NewJersey(scrapy.Spider):
     name = "NJ_links"
 
     start_urls = ['https://nj.gov/governor/news/news/562020/approved/news_archive.shtml'
