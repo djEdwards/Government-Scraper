@@ -40,13 +40,13 @@ class massachusettsSpider(scrapy.Spider):
         yield{
 
             'title': titleMinusUnnecessaryChars,
-            'source': 'Georgia State Government',
+            'source': 'Massachusetts State Government',
             'published': updatedDateTime,
             'url': url,
             'scraped': datetimeToday,
             'classes': ['Government'],
             'country': 'United States',
-            'municipality': 'Georgia',
+            'municipality': 'Massachusetts',
             'language': language,
             'text': textMinusUnnecessaryChars
         }
