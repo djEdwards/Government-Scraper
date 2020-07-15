@@ -1,6 +1,6 @@
 #################
-## Georgia  Scraper
-## 06/18/20
+## COVID TASK FORCE  Scraper
+## 07/13/20
 ## DJ Edwards
 #################
 import scrapy
@@ -11,11 +11,11 @@ from datetime import datetime
 from functools import reduce
 
 
-class georgiaSpider(scrapy.Spider):
-    linksFile = open('all_GA_links.txt', 'r')
+class covidtaskforceSpider(scrapy.Spider):
+    linksFile = open('all_CTF_links.txt', 'r')
 
-    name = "georgia"
-    start_urls = map(lambda link: 'https://gov.georgia.gov' + link if link.startswith(
+    name = "covidtaskforce"
+    start_urls = map(lambda link: 'https://www.rev.com' + link if link.startswith(
         'https') == False else link, linksFile.read().split(','))
 
     def parse(self, response):
@@ -23,13 +23,12 @@ class georgiaSpider(scrapy.Spider):
         url = response.url
         datetimeToday = now + 'Z'
         textContent = 'todo'
-        dateElement = response.css('time::text').get()
-        dateElementText = dateElement.replace('\t', '').replace('\n', '').replace('                                 ', '').replace('                 ', '')
+        dateElementText = response.xpath('//*[@id="fl-main-content"]/div[1]/div/div/div/div[2]/div/div/div[1]/div/div/p/text()').get()
         dateElementArray = dateElementText.split(',')
         updatedDateISO = dateparser.parse(dateElementArray[0], languages=['en']).date()
         updatedDateTime = str(updatedDateISO)
-        title = response.css('h1::text').get()
-        contentArray = response.css('p::text').extract()
+        title = response.css('.fl-heading-text::text').get()
+        contentArray = response.css('.fl-callout-text p::text').extract()
         converter = html2text.HTML2Text()
         converter.ignore_links = True
         text = reduce(lambda first, second: converter.handle(first)+converter.handle(second), contentArray)
@@ -39,13 +38,13 @@ class georgiaSpider(scrapy.Spider):
         yield{
 
             'title': title,
-            'source': 'Georgia State Government',
+            'source': 'Covid-19 Presidential Task Force ',
             'published': updatedDateTime,
             'url': url,
             'scraped': datetimeToday,
             'classes': ['Government'],
             'country': 'United States of America',
-            'municipality': 'Georgia',
+            'municipality': 'US Government',
             'language': language,
             'text': textMinusUnnecessaryChars
         }

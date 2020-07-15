@@ -1,3 +1,4 @@
+## Version 0 ------------------------------------------------------------------>>>>
 
 # scrapy crawl AL_links
 # scrapy crawl alabama -o AL_RESULTS.json
@@ -13,9 +14,6 @@
 
 # scrapy crawl DE_links
 # scrapy crawl delaware -o DE_RESULTS.json
-
-# scrapy crawl FL_links
-# scrapy crawl florida -o FL_RESULTS.json
 
 # scrapy crawl GA_links
 # scrapy crawl georgia -o GA_RESULTS.json
@@ -48,4 +46,24 @@
 # scrapy crawl vermont -o VT_RESULTS.json 
 
 # scrapy crawl MA_links
-# scrapy crawl massachusetts -o MA_RESULTS.json 
+# scrapy crawl massachusetts -o MA_RESULTS.json
+
+# scrapy crawl NC_links
+# scrapy crawl northcarolina -o NC_RESULTS.json
+
+# scrapy crawl CT_links
+# scrapy crawl connecticut -o CT_RESULTS.json
+
+## Version 1  ------------------------------------------------------------------>>>>
+
+# scrapy crawl UT_links
+# scrapy crawl utah -o UT_RESULTS.json
+
+# scrapy crawl WY_links
+# scrapy crawl wyoming -o WY_RESULTS.json
+
+# scrapy crawl FDA_links
+# scrapy crawl fda -o FDA_RESULTS.json
+
+# scrapy crawl CTF_links
+# scrapy crawl covidtaskforce -o CTF_RESULTS.json

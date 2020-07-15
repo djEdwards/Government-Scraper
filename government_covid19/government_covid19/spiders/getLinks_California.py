@@ -2,7 +2,7 @@
 ## Golden State - GET LINKS - Scraper
 ## 06/11/20
 ## DJ Edwards
-#################import scrapy
+#################
 
 import scrapy
 

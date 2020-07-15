@@ -45,7 +45,7 @@ class massachusettsSpider(scrapy.Spider):
             'url': url,
             'scraped': datetimeToday,
             'classes': ['Government'],
-            'country': 'United States',
+            'country': 'United States of America',
             'municipality': 'Massachusetts',
             'language': language,
             'text': textMinusUnnecessaryChars

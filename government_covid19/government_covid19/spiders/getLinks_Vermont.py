@@ -17,7 +17,6 @@ class getLinks_Vermont(scrapy.Spider):
                   'https://governor.vermont.gov/press_releases?page=6'
     ]
 
-    global filename
     def parse(self, response):
         filename = 'all_VT_links.txt'
         links = response.css('h2 a::attr(href)').getall()

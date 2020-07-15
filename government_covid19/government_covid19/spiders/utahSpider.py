@@ -1,6 +1,6 @@
 #################
-## Georgia  Scraper
-## 06/18/20
+## Utah  Scraper
+## 07/06/20
 ## DJ Edwards
 #################
 import scrapy
@@ -11,11 +11,11 @@ from datetime import datetime
 from functools import reduce
 
 
-class georgiaSpider(scrapy.Spider):
-    linksFile = open('all_GA_links.txt', 'r')
+class utahSpider(scrapy.Spider):
+    linksFile = open('all_UT_links.txt', 'r')
 
-    name = "georgia"
-    start_urls = map(lambda link: 'https://gov.georgia.gov' + link if link.startswith(
+    name = "utah"
+    start_urls = map(lambda link: 'hhttps://health.utah.gov' + link if link.startswith(
         'https') == False else link, linksFile.read().split(','))
 
     def parse(self, response):
@@ -23,7 +23,7 @@ class georgiaSpider(scrapy.Spider):
         url = response.url
         datetimeToday = now + 'Z'
         textContent = 'todo'
-        dateElement = response.css('time::text').get()
+        dateElement = response.css('.entry-date::text').get()
         dateElementText = dateElement.replace('\t', '').replace('\n', '').replace('                                 ', '').replace('                 ', '')
         dateElementArray = dateElementText.split(',')
         updatedDateISO = dateparser.parse(dateElementArray[0], languages=['en']).date()
@@ -39,13 +39,13 @@ class georgiaSpider(scrapy.Spider):
         yield{
 
             'title': title,
-            'source': 'Georgia State Government',
+            'source': 'Utah Department Of Health',
             'published': updatedDateTime,
             'url': url,
             'scraped': datetimeToday,
             'classes': ['Government'],
             'country': 'United States of America',
-            'municipality': 'Georgia',
+            'municipality': 'Utah',
             'language': language,
             'text': textMinusUnnecessaryChars
         }

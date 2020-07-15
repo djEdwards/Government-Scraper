@@ -15,8 +15,9 @@ class getLinks_Hawaii(scrapy.Spider):
     'https://governor.hawaii.gov/category/newsroom/press-releases/page/4/',
     'https://governor.hawaii.gov/category/newsroom/press-releases/page/5/'
     ]
+
     def parse(self, response):
-        filename = "all_HI_links.txt'
+        filename = 'all_HI_links.txt'
         links = response.css('h3 a::attr(href)').getall()
         with open(filename,'a') as f:
             f.write(','.join(links))

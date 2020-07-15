@@ -1,6 +1,7 @@
+
 #################
-## Georgia  Scraper
-## 06/18/20
+## Wyoming- Scraper
+## 07/06/20
 ## DJ Edwards
 #################
 import scrapy
@@ -11,11 +12,11 @@ from datetime import datetime
 from functools import reduce
 
 
-class georgiaSpider(scrapy.Spider):
-    linksFile = open('all_GA_links.txt', 'r')
+class wyomingSpider(scrapy.Spider):
+    linksFile = open('all_WY_links.txt', 'r')
 
-    name = "georgia"
-    start_urls = map(lambda link: 'https://gov.georgia.gov' + link if link.startswith(
+    name = "wyoming"
+    start_urls = map(lambda link: 'https://www.wyofile.com/' + link if link.startswith(
         'https') == False else link, linksFile.read().split(','))
 
     def parse(self, response):
@@ -23,12 +24,11 @@ class georgiaSpider(scrapy.Spider):
         url = response.url
         datetimeToday = now + 'Z'
         textContent = 'todo'
-        dateElement = response.css('time::text').get()
-        dateElementText = dateElement.replace('\t', '').replace('\n', '').replace('                                 ', '').replace('                 ', '')
+        dateElementText = response.css('p::text').get()
         dateElementArray = dateElementText.split(',')
         updatedDateISO = dateparser.parse(dateElementArray[0], languages=['en']).date()
         updatedDateTime = str(updatedDateISO)
-        title = response.css('h1::text').get()
+        title = response.css('.entry-title::text').get()
         contentArray = response.css('p::text').extract()
         converter = html2text.HTML2Text()
         converter.ignore_links = True
@@ -37,16 +37,14 @@ class georgiaSpider(scrapy.Spider):
         textMinusUnnecessaryChars = text.replace('\\','')
         language = details[0].language_name
         yield{
-
             'title': title,
-            'source': 'Georgia State Government',
+            'source': 'Wyoming Department of Health',
             'published': updatedDateTime,
             'url': url,
             'scraped': datetimeToday,
             'classes': ['Government'],
             'country': 'United States of America',
-            'municipality': 'Georgia',
+            'municipality': 'Wyoming',
             'language': language,
             'text': textMinusUnnecessaryChars
         }
- 

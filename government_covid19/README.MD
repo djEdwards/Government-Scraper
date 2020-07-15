@@ -24,29 +24,31 @@ The CDC posts are saved on `[STATE INTIALS]_RESULTS.json` in the format `{Title,
 - While in virtualenv run `deactivate` to stop and exit the virtual envrionment
 - Source code for scraper can be found in `cdc_scrape/spiders` if starting from the root directory (directory containing this README)
 
-## ------------------------------------------------
+
 
 ## * Individual State Scraper Notes:
 - (// - Indicates if scraper contains updated ISO date format)
 - (X - Indicates that source is blocking scraping, or mostly contains PDFS/Vidos)
 
+### Version 0 --------------------------
+
 ### 1. Alabama //
-    - Complete.(~90 sources)
+    - Complete.(~90 articles)
 
 ### 2. Alaska - X
     - Majority were PDFs.
 
 ### 3. Arizona //
-    - Complete. (~145 sources)
+    - Complete. (~145 articles)
 
 ### 4. Arkansas - X
     - Majority were PDFs.
 
 ### 5. California //
-    - Complete. (~120 sources)
+    - Complete. (~120 articles)
 
 ### 6. Maine //
-    - Complete. (~130 sources)
+    - Complete. (~130 articles)
 
 ### 7. Delaware
     - Complete. (Old Version). Still trying to update formatting.
@@ -55,48 +57,63 @@ The CDC posts are saved on `[STATE INTIALS]_RESULTS.json` in the format `{Title,
     - Blocked Scraping.
 
 ### 9. Georgia //
-    - Complete. Doesn't close properly... (~40 sources)
+    - Complete. Doesn't close properly... (~40 articles)
 
 ### 10. Hawai'i //
-    - Complete. (~40 sources)
+    - Complete. (~40 articles)
 
 ### 11. Idaho //
-    - Complete. (~50 sources)
+    - Complete. (~50 articles)
 
 ### 12. Illinois - X
     - skipped. (Fow now)
 
 ### 13. New York //
-    - Complete. (~40 sources)
+    - Complete. (~40 articles)
 
 ### 14. Louisana - X
     - Blocked scraping.
        
 ### 15. Washington //
-    - Complete. (~50 sources)
+    - Complete. (~50 articles)
 
 ### 16. New Jersey //
-    - Complete. (~70 sources)
+    - Complete. (~70 articles)
 
 ### 17. Pennsylvania //
-    - Complete. (~70 sources)
+    - Complete. (~70 articles)
 
 ### 18. Texas //
-    - Complete. (~200 sources)
+    - Complete. (~200 articles)
 
 ### 19. Vermont //
-    - Complete. (~60 sources)
+    - Complete. (~60 articles)
 
 ### 20. Michigan - X
     - Blocked Scaping.
 
 ### 21. Massachusetts //
-    - Complete. (~80 sources)
+    - Complete. (~80 articles)
 
 ### 22. North Carolina //
-    - Complete. (~140 sources)
+    - Complete. (~140 articles)
 
-### Number of working spiders = 16
+### 23. Connecticutt //
+    - Complete. Doesn't close properly... (~40 articles)
 
 
 
+### Version 1 --------------------------
+
+
+### 24. Utah 
+    - Complete. (~40 articles)
+
+### 25. Wyoming 
+    - Complete. (~80 articles)
+
+### 26. FDA 
+    - Complete (~90 articles)
+
+### 27. COVID Task Force Transcripts 
+    - Complete.

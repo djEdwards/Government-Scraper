@@ -27,7 +27,7 @@ class newjerseySpider(scrapy.Spider):
         dateElementText = dateElement.replace('\t', '').replace('\n', '').replace('                                 ', '').replace('                 ', '')
         dateElementArray = dateElementText.split(',')
         updatedDateISO = dateparser.parse(dateElementArray[0], languages=['en']).date()
-    
+
         updatedDateTime = str(updatedDateISO)
         title = response.css('h3::text').get()
         contentArray = response.css('p::text').extract()
@@ -44,7 +44,7 @@ class newjerseySpider(scrapy.Spider):
             'url': url,
             'scraped': datetimeToday,
             'classes': ['Government'],
-            'country': 'United States',
+            'country': 'United States of America',
             'municipality': 'New Jersey',
             'language': language,
             'text': textMinusUnnecessaryChars

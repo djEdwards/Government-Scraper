@@ -44,7 +44,7 @@ class vermontSpider(scrapy.Spider):
             'url': url,
             'scraped': datetimeToday,
             'classes': ['Government'],
-            'country': 'United States',
+            'country': 'United States of America',
             'municipality': 'Vermont',
             'language': language,
             'text': textMinusUnnecessaryChars

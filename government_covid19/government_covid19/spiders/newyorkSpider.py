@@ -45,7 +45,7 @@ class newyorkSpider(scrapy.Spider):
             'url': url,
             'scraped': datetimeToday,
             'classes': ['Government'],
-            'country': 'United States',
+            'country': 'United States of America',
             'municipality': 'New York',
             'language': language,
             'text': textMinusUnnecessaryChars

@@ -1,6 +1,6 @@
 #################
-## Georgia  Scraper
-## 06/18/20
+## FDA- Scraper
+## 07/08/20
 ## DJ Edwards
 #################
 import scrapy
@@ -11,11 +11,11 @@ from datetime import datetime
 from functools import reduce
 
 
-class georgiaSpider(scrapy.Spider):
-    linksFile = open('all_GA_links.txt', 'r')
+class fdaSpider(scrapy.Spider):
+    linksFile = open('all_FDA_links.txt', 'r')
 
-    name = "georgia"
-    start_urls = map(lambda link: 'https://gov.georgia.gov' + link if link.startswith(
+    name = "fda"
+    start_urls = map(lambda link: 'https://www.fda.gov/' + link if link.startswith(
         'https') == False else link, linksFile.read().split(','))
 
     def parse(self, response):
@@ -28,25 +28,27 @@ class georgiaSpider(scrapy.Spider):
         dateElementArray = dateElementText.split(',')
         updatedDateISO = dateparser.parse(dateElementArray[0], languages=['en']).date()
         updatedDateTime = str(updatedDateISO)
-        title = response.css('h1::text').get()
+        tempTitle = response.css('.content-title.text-center::text').get()
+        if( tempTitle == '\n  '):
+            title = response.css(".field--item::text").get()
+        else:
+            title = tempTitle
         contentArray = response.css('p::text').extract()
         converter = html2text.HTML2Text()
         converter.ignore_links = True
         text = reduce(lambda first, second: converter.handle(first)+converter.handle(second), contentArray)
         isReliable, textBytesFound, details = cld2.detect(text)
-        textMinusUnnecessaryChars = text.replace('\\','')
+        textMinusUnnecessaryChars = text.replace("Federal government websites often end in .gov or .mil. Before sharing\nsensitive information, make sure you're on a federal government site. The\nensures that you are connecting to the official website and that any\ninformation you provide is encrypted and transmitted securely.","").replace('\\','')
         language = details[0].language_name
         yield{
-
             'title': title,
-            'source': 'Georgia State Government',
-            'published': updatedDateTime,
+            'source': 'Federal Dept. Of Agriculture',
+            'published': updatedDateISO,
             'url': url,
             'scraped': datetimeToday,
             'classes': ['Government'],
             'country': 'United States of America',
-            'municipality': 'Georgia',
+            'municipality': 'Federal Government',
             'language': language,
             'text': textMinusUnnecessaryChars
         }
- 

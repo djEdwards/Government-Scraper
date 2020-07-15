@@ -27,7 +27,6 @@ class northcarolinaSpider(scrapy.Spider):
         dateElementText = dateElement.replace('\t', '').replace('\n', '').replace('                                 ', '').replace('                 ', '')
         dateElementArray = dateElementText.split(',')
         updatedDateISO = dateparser.parse(dateElementArray[0], languages=['en']).date()
-    
         updatedDateTime = str(updatedDateISO)
         title = response.css('h1::text').get()
         titleMinusUnecessary = title.replace('\n                  ','').replace('                                                      ','').replace('                                                    ','')
@@ -45,9 +44,8 @@ class northcarolinaSpider(scrapy.Spider):
             'url': url,
             'scraped': datetimeToday,
             'classes': ['Government'],
-            'country': 'United States',
+            'country': 'United States of America',
             'municipality': 'North Carolina',
             'language': language,
             'text': textMinusUnnecessaryChars
         }
-

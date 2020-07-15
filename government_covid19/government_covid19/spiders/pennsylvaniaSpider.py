@@ -1,3 +1,4 @@
+
 #################
 ## Pennsylvania  Scraper
 ## 06/25/20
@@ -28,7 +29,7 @@ class pennsylvaniaSpider(scrapy.Spider):
         dateElementArray = dateElementText.split(',')
         updatedDateISO = dateparser.parse(dateElementArray[0], languages=['en']).date()
         updatedDateTime = str(updatedDateISO)
-        title = response.css('.h3::text').getall()
+        title = response.css('.h3::text').get()
         contentArray = response.css('p::text').extract()
         converter = html2text.HTML2Text()
         converter.ignore_links = True
@@ -44,7 +45,7 @@ class pennsylvaniaSpider(scrapy.Spider):
             'url': url,
             'scraped': datetimeToday,
             'classes': ['Government'],
-            'country': 'United States',
+            'country': 'United States of America',
             'municipality': 'Pennsylvania',
             'language': language,
             'text': textMinusUnnecessaryChars

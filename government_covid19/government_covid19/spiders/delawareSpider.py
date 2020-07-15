@@ -28,7 +28,7 @@ class delawareiaSpider(scrapy.Spider):
         dateElementArray = dateElementText.split(',')
         updatedDateISO = dateparser.parse(dateElementArray[0], languages=['en']).date()
         updatedDateTime = str(updatedDateISO)
-        title = response.css('h1::text')[1].getall()
+        title = response.css('h1::text')[1].get()
         contentArray = response.css('p::text').extract()
         converter = html2text.HTML2Text()
         converter.ignore_links = True
@@ -44,7 +44,7 @@ class delawareiaSpider(scrapy.Spider):
             'url': url,
             'scraped': datetimeToday,
             'classes': ['Government'],
-            'country': 'United States',
+            'country': 'United States of America',
             'municipality': 'Delaware',
             'language': language,
             'text': textMinusUnnecessaryChars

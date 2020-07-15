@@ -1,6 +1,6 @@
 #################
-## Georgia  Scraper
-## 06/18/20
+## Connecticut Scraper
+## 06/29/20
 ## DJ Edwards
 #################
 import scrapy
@@ -11,11 +11,11 @@ from datetime import datetime
 from functools import reduce
 
 
-class georgiaSpider(scrapy.Spider):
-    linksFile = open('all_GA_links.txt', 'r')
+class connecticutSpider(scrapy.Spider):
+    linksFile = open('all_CT_links.txt', 'r')
 
-    name = "georgia"
-    start_urls = map(lambda link: 'https://gov.georgia.gov' + link if link.startswith(
+    name = "connecticut"
+    start_urls = map(lambda link: 'https://portal.ct.gov' + link if link.startswith(
         'https') == False else link, linksFile.read().split(','))
 
     def parse(self, response):
@@ -23,13 +23,13 @@ class georgiaSpider(scrapy.Spider):
         url = response.url
         datetimeToday = now + 'Z'
         textContent = 'todo'
-        dateElement = response.css('time::text').get()
+        dateElement = response.css('.date::text').get()
         dateElementText = dateElement.replace('\t', '').replace('\n', '').replace('                                 ', '').replace('                 ', '')
         dateElementArray = dateElementText.split(',')
         updatedDateISO = dateparser.parse(dateElementArray[0], languages=['en']).date()
         updatedDateTime = str(updatedDateISO)
-        title = response.css('h1::text').get()
-        contentArray = response.css('p::text').extract()
+        title = response.css('h3::text')[1].get()
+        contentArray = response.css('span::text').extract()
         converter = html2text.HTML2Text()
         converter.ignore_links = True
         text = reduce(lambda first, second: converter.handle(first)+converter.handle(second), contentArray)
@@ -39,13 +39,13 @@ class georgiaSpider(scrapy.Spider):
         yield{
 
             'title': title,
-            'source': 'Georgia State Government',
+            'source': 'Connecticut State Government',
             'published': updatedDateTime,
             'url': url,
             'scraped': datetimeToday,
             'classes': ['Government'],
             'country': 'United States of America',
-            'municipality': 'Georgia',
+            'municipality': 'Connecticut',
             'language': language,
             'text': textMinusUnnecessaryChars
         }

@@ -27,10 +27,8 @@ class hawaiiSpider(scrapy.Spider):
         dateElementText = dateElement.replace('Posted on ', '').replace(' in ','')
         dateElementArray = dateElementText.split(',')
         updatedDateISO = dateparser.parse(dateElementArray[0], languages=['en']).date()
-        # if (dateElement[2][1:]!= None):
-        #     updatedTimeISO = dateElementArray[2][1:].replace('h', ':')+'-03:00'  INDEX OUT OF RANGE HERE. SO I AM WORKING AROUND IT FOR NOW.
         updatedDateTime = str(updatedDateISO)
-        title = response.css('.pagetitle h2::text').getall()
+        title = response.css('.pagetitle h2::text').get()
         contentArray = response.css('p::text').extract()
         converter = html2text.HTML2Text()
         converter.ignore_links = True
@@ -46,7 +44,7 @@ class hawaiiSpider(scrapy.Spider):
             'url': url,
             'scraped': datetimeToday,
             'classes': ['Government'],
-            'country': 'United States',
+            'country': 'United States of America',
             'municipality': 'Hawaii',
             'language': language,
             'text': textMinusUnnecessaryChars
