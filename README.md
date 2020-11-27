@@ -1,4 +1,5 @@
-*** State Government Scrapers
+*** State Government Scrapers ***
+
 This collection of scrapers uses Scrapy with Python to scrape all updates posted by state governments regarding COVID-19.
 
 This scraper uses scrapy and html2text as dependencies. I am also using Python3 to create a virtual environment to create an isoalted environment to run the scraper on.
